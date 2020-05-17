@@ -9,14 +9,14 @@ export class DateField extends FieldBase {
 
     render() {
         const container = document.createElement('div');
-        const input = document.createElement('input');
-        input.setAttribute('type', 'text');
-        input.setAttribute('name', this.name);
-        input.setAttribute('id', this.name);
-        input.addEventListener('input', (event) => this.handleChange(event));
+        const date = document.createElement('date');
+        date.setAttribute('type', 'text');
+        date.setAttribute('name', this.name);
+        date.setAttribute('id', this.name);
+        date.addEventListener('date', (event) => this.handleChange(event));
         const label = new FieldLabel(this.name, this.label);
         container.appendChild(label.render());
-        container.appendChild(input);
+        container.appendChild(date);
         return container;
     }
 }
