@@ -1,6 +1,12 @@
+import { Textarea } from './classes/Textarea';
+import { FieldType } from './enums/FieldType';
+import { InputField } from './classes/InputField';
 import './main.scss';
 import { App } from './app';
 
-const hello = "yep, it's workin ;laskjf lsdkjf l;kdsjg l;kdsjgklg. still sick";
-document.body.innerHTML = hello;
+const input = new InputField('test', 'labelForTest', FieldType.Textbox);
+const textarea = new Textarea('textarea', 'labelForTextarea', FieldType.Textarea);
+const container = document.querySelector('#container');
+container.appendChild(input.render());
+container.appendChild(textarea.render());
 const app = new App();
