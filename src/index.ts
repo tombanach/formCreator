@@ -1,12 +1,14 @@
-import { Textarea } from './classes/Textarea';
-import { FieldType } from './enums/FieldType';
-import { InputField } from './classes/InputField';
-import './main.scss';
-import { App } from './app';
+import "./main.scss";
+import { App } from "./App";
 
-const input = new InputField('test', 'labelForTest', FieldType.Textbox);
-const textarea = new Textarea('textarea', 'labelForTextarea', FieldType.Textarea);
-const container = document.querySelector('#container');
-container.appendChild(input.render());
-container.appendChild(textarea.render());
-const app = new App();
+const container = document.querySelector("#container #form");
+const showStateBtn = document.querySelector("#show-state-btn");
+const formValues = document.querySelector("#formValues");
+showStateBtn.addEventListener("click", () => {
+  formValues.innerHTML = "";
+  app.form.getValue().forEach((x) => (formValues.innerHTML += x + "<br>"));
+});
+
+const app = new App(container);
+app.createBlankForm();
+app.form.render();
