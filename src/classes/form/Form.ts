@@ -1,10 +1,15 @@
+import { LocStorage } from "./../LocStorage";
 import IField from "../../interfaces/IField";
 
 export class Form {
-  constructor(container: Element) {
+  constructor(container: Element, actions: Element) {
     this.container = container;
+    this.locStorage = new LocStorage();
+    this.actionButtons = actions;
   }
+  locStorage: LocStorage;
   container: Element;
+  actionButtons: Element;
   private state: IField[] = [];
 
   add(field: IField) {
@@ -19,9 +24,33 @@ export class Form {
     return result;
   }
 
+  save(values: any) {
+    this.locStorage.saveDocument(values);
+    window.location.href = "index.html";
+  }
+
+  renderSaveButton() {
+    const btn = document.createElement("button");
+    btn.classList.add("btn", "btn-success", "mr-3");
+    btn.setAttribute("id", "save-button");
+    btn.setAttribute("type", "submit");
+    btn.innerText = "Zapisz";
+    return btn;
+  }
+
+  renderBackButton() {
+    const btn = document.createElement("button");
+    btn.classList.add("btn", "btn-warning");
+    btn.setAttribute("id", "back-btn");
+    btn.innerText = "Wstecz";
+    return btn;
+  }
+
   render() {
     this.state.forEach((x) => {
-      this.container.appendChild(x.render());
+      this.container?.appendChild(x.render());
     });
+    this.actionButtons?.appendChild(this.renderSaveButton());
+    this.actionButtons?.appendChild(this.renderBackButton());
   }
 }

@@ -2,3 +2,17 @@
   width: 75%;
   margin: auto;
 }
+
+#container a:hover {
+  text-decoration: none;
+}
+
+.list-group-item {
+  text-align: center;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+}

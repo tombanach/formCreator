@@ -23,5 +23,9 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "i": "^0.3.6",
+    "node-html-parser": "^1.2.16",
+    "npm": "^6.14.5"
+  }
 }

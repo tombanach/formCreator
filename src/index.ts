@@ -2,13 +2,20 @@ import "./main.scss";
 import { App } from "./App";
 
 const container = document.querySelector("#container #form");
-const showStateBtn = document.querySelector("#show-state-btn");
+const actions = document.querySelector(".actions");
 const formValues = document.querySelector("#formValues");
-showStateBtn.addEventListener("click", () => {
-  formValues.innerHTML = "";
-  app.form.getValue().forEach((x) => (formValues.innerHTML += x + "<br>"));
-});
-
-const app = new App(container);
+const docListContainer = document.querySelector("#document-list-container");
+const app = new App(container, actions, docListContainer);
 app.createBlankForm();
 app.form.render();
+app.showSavedDocuments();
+
+const saveButton = document.querySelector("#save-button");
+saveButton?.addEventListener("click", () => {
+  app.form.save(app.form.getValue());
+});
+
+const backButton = document.querySelector("#back-btn");
+backButton?.addEventListener("click", () => {
+  window.location.href = "index.html";
+});
