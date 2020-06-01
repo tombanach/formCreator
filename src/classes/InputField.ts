@@ -19,6 +19,7 @@ export class InputField extends FieldBase {
     input.setAttribute("type", "text");
     input.setAttribute("name", this.name);
     input.setAttribute("id", this.name);
+    input.setAttribute("value", this.value);
     input.addEventListener("input", (event) => this.handleChange(event));
     input.classList.add("form-control");
     const label = new FieldLabel(this.name, this.label);

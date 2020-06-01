@@ -20,6 +20,8 @@ export class Textarea extends FieldBase {
     textarea.setAttribute("id", this.name);
     textarea.setAttribute("cols", "50");
     textarea.setAttribute("rows", "4");
+    textarea.setAttribute("value", this.value);
+    textarea.innerHTML = this.value;
     textarea.addEventListener("input", (event) => this.handleChange(event));
     textarea.classList.add("form-control");
     const label = new FieldLabel(this.name, this.label);

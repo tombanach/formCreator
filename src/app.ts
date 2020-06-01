@@ -10,14 +10,31 @@ import { SelectField } from "./classes/SelectField";
 import { parse } from "node-html-parser";
 
 export class App {
-  constructor(container: Element, actions: Element, docListContainer: Element) {
+  constructor(
+    container: Element,
+    actions: Element,
+    docListContainer: Element,
+    editFormContainer?: Element
+  ) {
     this.documentList = new DocumentList();
     this.form = new Form(container, actions);
     this.documentListContainer = docListContainer;
+    this.editFormContainer = editFormContainer;
   }
   form: Form;
   documentList: DocumentList;
   documentListContainer: Element;
+  editFormContainer: Element;
+
+  showEditForm = (id: string) => {
+    let documentToEdit = JSON.parse(this.documentList.getDocument(id)) as any[];
+    this.form.state.forEach((s) => {
+      let temp = documentToEdit.find((d) => d.split("-")[0] == s.name);
+      s.value = temp.split("-")[1];
+    });
+    this.form.editFormContainer = this.editFormContainer;
+    this.form.render(true);
+  };
 
   showSavedDocuments() {
     this.documentListContainer?.appendChild(this.documentList.render());

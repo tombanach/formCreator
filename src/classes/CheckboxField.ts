@@ -22,6 +22,7 @@ export class CheckboxField extends FieldBase {
     input.setAttribute("type", "checkbox");
     input.setAttribute("name", this.name);
     input.setAttribute("id", this.name);
+    input.checked = this.value ? true : false;
     input.addEventListener("input", (event) => this.handleChange(event));
     input.style.transform = "scale(1.5)";
     input.style.marginRight = "10px";

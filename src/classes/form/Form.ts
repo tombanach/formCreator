@@ -10,7 +10,8 @@ export class Form {
   locStorage: LocStorage;
   container: Element;
   actionButtons: Element;
-  private state: IField[] = [];
+  editFormContainer: Element;
+  state: IField[] = [];
 
   add(field: IField) {
     this.state.push(field);
@@ -46,9 +47,11 @@ export class Form {
     return btn;
   }
 
-  render() {
+  render(edit?: boolean) {
     this.state.forEach((x) => {
-      this.container?.appendChild(x.render());
+      edit
+        ? this.editFormContainer.appendChild(x.render())
+        : this.container?.appendChild(x.render());
     });
     this.actionButtons?.appendChild(this.renderSaveButton());
     this.actionButtons?.appendChild(this.renderBackButton());
