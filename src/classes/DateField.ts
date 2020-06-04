@@ -20,7 +20,7 @@ export class DateField extends FieldBase {
     date.setAttribute("name", this.name);
     date.setAttribute("id", this.name);
     date.setAttribute("value", this.value);
-    date.addEventListener("date", (event) => this.handleChange(event));
+    date.addEventListener("input", (event) => this.handleChange(event));
     date.classList.add("form-control");
     const label = new FieldLabel(this.name, this.label);
     container.appendChild(label.render());

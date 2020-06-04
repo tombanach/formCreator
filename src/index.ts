@@ -6,15 +6,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.querySelector("#container #form");
   const actions = document.querySelector(".actions");
   const formValues = document.querySelector("#formValues");
+  const editFormContainer = document.querySelector("#edit-form");
   const docListContainer = document.querySelector("#document-list-container");
-  const app = new App(container, actions, docListContainer);
+  const app = new App(container, actions, docListContainer, editFormContainer);
   app.createBlankForm();
-  app.form.render();
   app.showSavedDocuments();
 
   const saveButton = document.querySelector("#save-button");
   saveButton?.addEventListener("click", () => {
-    app.form.save(app.form.getValue());
+    app.formCreator.saveForm(
+      app.formCreator.form.getValue(),
+      Router.getParam()
+    );
   });
 
   const backButton = document.querySelector("#back-btn");
@@ -23,8 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   if (Router.getParam() !== null) {
-    const editFormContainer = document.querySelector("#edit-form");
-    app.editFormContainer = editFormContainer;
     app.showEditForm(Router.getParam());
   }
 });

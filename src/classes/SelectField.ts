@@ -36,6 +36,10 @@ export class SelectField extends FieldBase {
       option.text = opt;
       input.appendChild(option);
     });
+    if (this.value !== undefined) {
+      let selectedIndex = this.options.indexOf(this.value) + 1;
+      input.children[selectedIndex].setAttribute("selected", "selected");
+    }
     const label = new FieldLabel(this.name, this.label);
     container.appendChild(label.render());
     container.appendChild(input);

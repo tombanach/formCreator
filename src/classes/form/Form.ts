@@ -1,9 +1,15 @@
 import { LocStorage } from "./../LocStorage";
 import IField from "../../interfaces/IField";
+import { IEntry } from "../../interfaces/IEntry";
 
 export class Form {
-  constructor(container: Element, actions: Element) {
+  constructor(
+    container: Element,
+    actions: Element,
+    editFormContainer?: Element
+  ) {
     this.container = container;
+    this.editFormContainer = editFormContainer;
     this.locStorage = new LocStorage();
     this.actionButtons = actions;
   }
@@ -17,16 +23,20 @@ export class Form {
     this.state.push(field);
   }
 
-  getValue(): string[] {
-    const result: string[] = [];
+  getValue(): IEntry[] {
+    const result: IEntry[] = [];
     this.state.forEach((x) => {
-      result.push(`${x.name}-${x.value}`);
+      let entry: IEntry = {
+        name: x.name,
+        value: x.value,
+      };
+      result.push(entry);
     });
     return result;
   }
 
-  save(values: any) {
-    this.locStorage.saveDocument(values);
+  save(values: any, editKey?: string) {
+    this.locStorage.saveDocument(values, editKey);
     window.location.href = "index.html";
   }
 
@@ -48,12 +58,16 @@ export class Form {
   }
 
   render(edit?: boolean) {
-    this.state.forEach((x) => {
-      edit
-        ? this.editFormContainer.appendChild(x.render())
-        : this.container?.appendChild(x.render());
-    });
-    this.actionButtons?.appendChild(this.renderSaveButton());
-    this.actionButtons?.appendChild(this.renderBackButton());
+    if (edit) {
+      this.state.forEach((x) => {
+        this.editFormContainer.appendChild(x.render());
+      });
+    } else {
+      this.state.forEach((x) => {
+        this.container?.appendChild(x.render());
+      });
+      this.actionButtons?.appendChild(this.renderSaveButton());
+      this.actionButtons?.appendChild(this.renderBackButton());
+    }
   }
 }
