@@ -38,7 +38,12 @@ export class FormCreator {
       FieldType.Select,
       this.getFieldTypes()
     );
-
+    let optionsForSelect = new InputField(
+      "optionsForSelect",
+      "Opcje dla pola typu select oddzielone ','",
+      FieldType.Select,
+      ""
+    );
     let label = new InputField("label", "Etykieta", FieldType.Textbox, "");
     let name = new InputField("name", "Nazwa pola", FieldType.Textbox, "");
     let value = new InputField(
@@ -52,6 +57,7 @@ export class FormCreator {
     form.add(label);
     form.add(name);
     form.add(value);
+    form.add(optionsForSelect);
     let container = document.createElement("div");
     let addButton = document.createElement("button");
     addButton.classList.add("btn", "btn-success");
@@ -62,6 +68,7 @@ export class FormCreator {
     });
     container.append(
       select.render(),
+      optionsForSelect.render(),
       label.render(),
       name.render(),
       value.render(),

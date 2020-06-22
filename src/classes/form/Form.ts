@@ -10,7 +10,6 @@ import { LocStorage } from "./../LocStorage";
 import IField from "../../interfaces/IField";
 import { IEntry } from "../../interfaces/IEntry";
 import { DocumentList } from "../DocumentList";
-import { FieldBase } from "../FieldBase";
 
 export class Form {
   constructor(
@@ -87,7 +86,8 @@ export class Form {
     type: FieldType,
     name: string,
     label: string,
-    value: any
+    value: any,
+    optionsForSelect?: string[]
   ) {
     switch (type) {
       case FieldType.Textbox:
@@ -101,7 +101,13 @@ export class Form {
       case FieldType.Email:
         return new EmailField(name, label, FieldType.Email, value);
       case FieldType.Select:
-        return new SelectField(name, label, FieldType.Select, value);
+        return new SelectField(
+          name,
+          label,
+          FieldType.Select,
+          optionsForSelect,
+          value
+        );
     }
   }
 
@@ -113,7 +119,8 @@ export class Form {
           field[0].value,
           field[2].value,
           field[1].value,
-          field[3].value
+          field[3].value,
+          (field[4].value as string).split(",")
         )
       );
     });

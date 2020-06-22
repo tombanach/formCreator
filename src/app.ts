@@ -39,22 +39,6 @@ export class App {
     this.documentList.render();
   }
 
-  createBlankForm() {
-    this.form.add(new InputField("input", "labelForTest", FieldType.Textbox));
-    this.form.add(new DateField("date", "dateLabel", FieldType.Date));
-    this.form.add(
-      new Textarea("textarea", "labelForTextarea", FieldType.Textarea)
-    );
-    this.form.add(
-      new CheckboxField("checkbox", "checkboxLabel", FieldType.Checkbox)
-    );
-    this.form.add(new EmailField("email", "emailLabel", FieldType.Email));
-    this.form.add(
-      new SelectField("select", "selectLabel", FieldType.Select, ["tak", "nie"])
-    );
-    this.form.render();
-  }
-
   showNewForm(id: string) {
     this.form.restoreSavedForm(id);
   }
