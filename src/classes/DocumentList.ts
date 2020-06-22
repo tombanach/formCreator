@@ -1,6 +1,10 @@
 import { LocStorage } from "./LocStorage";
-import { parse } from "node-html-parser";
+
 export class DocumentList {
+  constructor(documentListContainer?: Element) {
+    this.documentListContainer = documentListContainer;
+  }
+  documentListContainer: Element;
   locStorage: LocStorage = new LocStorage();
   docList: string[];
 
@@ -16,7 +20,7 @@ export class DocumentList {
     return this.locStorage.loadDocument(id);
   };
 
-  render(): Node {
+  render() {
     let table = document.createElement("table");
     table.classList.add("table");
     let tr = document.createElement("tr");
@@ -47,6 +51,6 @@ export class DocumentList {
       tr.appendChild(buttonTd);
       table.appendChild(tr);
     });
-    return table;
+    this.documentListContainer?.appendChild(table);
   }
 }

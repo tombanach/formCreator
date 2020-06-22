@@ -14,10 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const saveButton = document.querySelector("#save-button");
   saveButton?.addEventListener("click", () => {
-    app.formCreator.saveForm(
-      app.formCreator.form.getValue(),
-      Router.getParam()
-    );
+    app.form.save(app.form.getValue(), Router.getParam());
   });
 
   const backButton = document.querySelector("#back-btn");
