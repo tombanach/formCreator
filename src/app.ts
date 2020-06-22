@@ -14,7 +14,8 @@ export class App {
     container: Element,
     actions: Element,
     docListContainer: Element,
-    editFormContainer?: Element
+    editFormContainer?: Element,
+    formCreatorContainer?: Element
   ) {
     this.form = new Form(
       container,
@@ -23,9 +24,11 @@ export class App {
       editFormContainer
     );
     this.documentList = new DocumentList(docListContainer);
+    this.formCreator = new FormCreator(formCreatorContainer);
   }
   form: Form;
   documentList: DocumentList;
+  formCreator: FormCreator;
 
   showEditForm = (id: string) => {
     this.form.showEditForm(id);

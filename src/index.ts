@@ -8,9 +8,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const formValues = document.querySelector("#formValues");
   const editFormContainer = document.querySelector("#edit-form");
   const docListContainer = document.querySelector("#document-list-container");
-  const app = new App(container, actions, docListContainer, editFormContainer);
+  const formCreatorContainer = document.querySelector("#form-creator");
+  const app = new App(
+    container,
+    actions,
+    docListContainer,
+    editFormContainer,
+    formCreatorContainer
+  );
   app.createBlankForm();
   app.showSavedDocuments();
+  app.formCreator.renderOption();
 
   const saveButton = document.querySelector("#save-button");
   saveButton?.addEventListener("click", () => {
@@ -19,6 +27,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const backButton = document.querySelector("#back-btn");
   backButton?.addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
+
+  const saveFormBtn = document.querySelector("#saveFormBtn");
+  saveFormBtn?.addEventListener("click", () => {
+    app.formCreator.saveForm();
     window.location.href = "index.html";
   });
 

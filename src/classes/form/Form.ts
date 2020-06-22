@@ -5,9 +5,9 @@ import { DocumentList } from "../DocumentList";
 
 export class Form {
   constructor(
-    container: Element,
-    actions: Element,
-    docListContainer: Element,
+    container?: Element,
+    actions?: Element,
+    docListContainer?: Element,
     editFormContainer?: Element
   ) {
     this.container = container;
@@ -23,6 +23,7 @@ export class Form {
   documentListContainer: Element;
   editFormContainer: Element;
   documentList: DocumentList;
+  id: string;
 
   state: IField[] = [];
 
