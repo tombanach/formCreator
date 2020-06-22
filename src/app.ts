@@ -15,7 +15,8 @@ export class App {
     actions: Element,
     docListContainer: Element,
     editFormContainer?: Element,
-    formCreatorContainer?: Element
+    formCreatorContainer?: Element,
+    formListContainer?: Element
   ) {
     this.form = new Form(
       container,
@@ -24,7 +25,7 @@ export class App {
       editFormContainer
     );
     this.documentList = new DocumentList(docListContainer);
-    this.formCreator = new FormCreator(formCreatorContainer);
+    this.formCreator = new FormCreator(formCreatorContainer, formListContainer);
   }
   form: Form;
   documentList: DocumentList;
@@ -52,5 +53,9 @@ export class App {
       new SelectField("select", "selectLabel", FieldType.Select, ["tak", "nie"])
     );
     this.form.render();
+  }
+
+  showNewForm(id: string) {
+    this.form.restoreSavedForm(id);
   }
 }

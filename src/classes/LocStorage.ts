@@ -1,7 +1,8 @@
 import { IDataStorage } from "./../interfaces/IDataStorage";
 export class LocStorage implements IDataStorage {
   saveDocument = (values: any, editKey?: string): string => {
-    if (editKey !== null) {
+    debugger;
+    if (editKey) {
       localStorage.removeItem(editKey);
       localStorage.setItem(editKey, JSON.stringify(values));
       return editKey;
@@ -31,6 +32,10 @@ export class LocStorage implements IDataStorage {
     localStorage.setItem(id, JSON.stringify(values));
     return id;
   };
+
+  getForm(id: string) {
+    return localStorage.getItem(id);
+  }
 
   removeForm = (id: string) => {
     localStorage.removeItem(id);

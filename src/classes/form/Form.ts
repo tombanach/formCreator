@@ -1,7 +1,16 @@
+import { Router } from "./../Router";
+import { SelectField } from "./../SelectField";
+import { EmailField } from "./../EmailField";
+import { CheckboxField } from "./../CheckboxField";
+import { Textarea } from "./../Textarea";
+import { DateField } from "./../DateField";
+import { InputField } from "./../InputField";
+import { FieldType } from "./../../enums/FieldType";
 import { LocStorage } from "./../LocStorage";
 import IField from "../../interfaces/IField";
 import { IEntry } from "../../interfaces/IEntry";
 import { DocumentList } from "../DocumentList";
+import { FieldBase } from "../FieldBase";
 
 export class Form {
   constructor(
@@ -54,6 +63,12 @@ export class Form {
     btn.setAttribute("id", "save-button");
     btn.setAttribute("type", "submit");
     btn.innerText = "Zapisz";
+    btn.addEventListener("click", () => {
+      this.save(
+        this.state,
+        Router.getParam().substr(0, 1) === "d" ? Router.getParam() : undefined
+      );
+    });
     return btn;
   }
 
@@ -62,16 +77,62 @@ export class Form {
     btn.classList.add("btn", "btn-warning");
     btn.setAttribute("id", "back-btn");
     btn.innerText = "Wstecz";
+    btn.addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
     return btn;
+  }
+
+  private createFieldBasedOnType(
+    type: FieldType,
+    name: string,
+    label: string,
+    value: any
+  ) {
+    switch (type) {
+      case FieldType.Textbox:
+        return new InputField(name, label, FieldType.Textbox, value);
+      case FieldType.Date:
+        return new DateField(name, label, FieldType.Date, value);
+      case FieldType.Textarea:
+        return new Textarea(name, label, FieldType.Textarea, value);
+      case FieldType.Checkbox:
+        return new CheckboxField(name, label, FieldType.Checkbox, value);
+      case FieldType.Email:
+        return new EmailField(name, label, FieldType.Email, value);
+      case FieldType.Select:
+        return new SelectField(name, label, FieldType.Select, value);
+    }
+  }
+
+  restoreSavedForm(id: string) {
+    let form = JSON.parse(this.locStorage.getForm(id)) as IEntry[][];
+    form.forEach((field) => {
+      this.add(
+        this.createFieldBasedOnType(
+          field[0].value,
+          field[2].value,
+          field[1].value,
+          field[3].value
+        )
+      );
+    });
+    this.render();
   }
 
   showEditForm = (id: string) => {
     let documentToEdit = JSON.parse(
       this.documentList.getDocument(id)
     ) as IField[];
-    this.state.forEach((s) => {
-      let temp = documentToEdit.find((d) => d.name == s.name);
-      s.value = temp.value;
+    documentToEdit.forEach((doc) => {
+      this.add(
+        this.createFieldBasedOnType(
+          doc.FieldType,
+          doc.name,
+          doc.label,
+          doc.value
+        )
+      );
     });
     this.editFormContainer = this.editFormContainer;
     this.render(true);
@@ -82,6 +143,8 @@ export class Form {
       this.state.forEach((x) => {
         this.editFormContainer.appendChild(x.render());
       });
+      this.actionButtons?.appendChild(this.renderSaveButton());
+      this.actionButtons?.appendChild(this.renderBackButton());
     } else {
       this.state.forEach((x) => {
         this.container?.appendChild(x.render());

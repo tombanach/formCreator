@@ -3,15 +3,17 @@ import { Form } from "./Form";
 import { FieldType } from "./../../enums/FieldType";
 import { SelectField } from "./../SelectField";
 import { InputField } from "./../InputField";
-import IField from "../../interfaces/IField";
 import { IEntry } from "../../interfaces/IEntry";
+
 export class FormCreator {
-  constructor(formCreatorContainer: Element) {
+  constructor(formCreatorContainer: Element, formListContainer?: Element) {
     this.formCreatorContainer = formCreatorContainer;
+    this.formListContainer = formListContainer;
     this.locStorage = new LocStorage();
   }
   fields: IEntry[][] = [];
   formCreatorContainer: Element;
+  formListContainer: Element;
   locStorage: LocStorage;
   newForm = () => {};
 
@@ -36,6 +38,7 @@ export class FormCreator {
       FieldType.Select,
       this.getFieldTypes()
     );
+
     let label = new InputField("label", "Etykieta", FieldType.Textbox, "");
     let name = new InputField("name", "Nazwa pola", FieldType.Textbox, "");
     let value = new InputField(
@@ -65,5 +68,39 @@ export class FormCreator {
       addButton
     );
     this.formCreatorContainer?.appendChild(container);
+  };
+
+  renderFormList = () => {
+    let table = document.createElement("table");
+    table.classList.add("table");
+    let tr = document.createElement("tr");
+    let th = document.createElement("th");
+    let btnTh = document.createElement("th");
+    tr.appendChild(th);
+    tr.appendChild(btnTh);
+    table.appendChild(tr);
+    th.innerHTML = "Dokumenty";
+
+    this.locStorage.getForms().forEach((f) => {
+      let tr = document.createElement("tr");
+      let td = document.createElement("td");
+      let link = document.createElement("a");
+      link.setAttribute("href", `new-document.html?id=${f}`);
+      link.innerText = f;
+      td.appendChild(link);
+      let removeBtn = document.createElement("button");
+      removeBtn.classList.add("btn", "btn-danger");
+      removeBtn.addEventListener("click", () => {
+        this.locStorage.removeForm(f);
+        location.reload();
+      });
+      removeBtn.innerText = "Usuń";
+      let buttonTd = document.createElement("td");
+      buttonTd.appendChild(removeBtn);
+      tr.appendChild(td);
+      tr.appendChild(buttonTd);
+      table.appendChild(tr);
+    });
+    this.formListContainer?.appendChild(table);
   };
 }

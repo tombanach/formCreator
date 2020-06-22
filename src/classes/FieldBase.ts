@@ -19,7 +19,6 @@ export abstract class FieldBase implements IField {
 
   handleChange = (event: any) => {
     this.value = event.target.value;
-    console.log(this.value);
   };
 
   name: string;
