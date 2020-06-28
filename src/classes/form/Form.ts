@@ -137,7 +137,8 @@ export class Form {
           doc.FieldType,
           doc.name,
           doc.label,
-          doc.value
+          doc.value,
+          doc.options
         )
       );
     });

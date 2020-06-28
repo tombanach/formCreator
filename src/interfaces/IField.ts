@@ -7,4 +7,5 @@ export default interface IField {
   value: string;
   render: () => any;
   getValue: () => any;
+  options?: string[];
 }
